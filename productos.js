@@ -1,8 +1,8 @@
 export async function obtenerProductos() {
     try {
-        const respuesta = await fetch ("https://productos.json");
-        if (respuesta === !ok){
-            throw new Error(`Error en la solicitud: ${respuesta.status}`);
+        const productos = await fetch("https://productos.json");
+        if (productos === !ok) {
+          throw new Error(`Error en la solicitud: ${productos.status}`);
         }
         return productos
     }
@@ -11,7 +11,7 @@ export async function obtenerProductos() {
         console.error(error.message)
         return []
     
-
+        
     }
     
 }    
