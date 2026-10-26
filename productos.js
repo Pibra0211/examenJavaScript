@@ -4,9 +4,9 @@ export async function obtenerProductos() {
         if (respuesta === !ok){
             throw new Error(`Error en la solicitud: ${respuesta.status}`);
         }
-        return respuesta
+        return productos
     }
-    
+
     catch(error){
         console.error(error.message)
         return []
