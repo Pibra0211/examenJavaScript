@@ -3,61 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TecnoStock | inicio</title>
+    <title>TecnoStock | Catálogo y pedidos</title>
     <link rel="stylesheet" href="css/styles.css">
-
 </head>
 <body>
-        <header id="headerPrincipal">
+    <header id="headerPrincipal">
         <h1>TecnoStock</h1>
-        <input type="text" id="inputBusqueda" aria-label="Buscar productos" placeholder=" ⌕ Buscar productos...">
-        <button id="btnCarrito" class="btn-carrito" aria-label="abrir carrito" aria-expanded="false" aria-controls="panelCarrito">💼︎
+        <label class="solo-lectores" for="inputBusqueda">Buscar productos por nombre o descripción</label>
+        <input type="search" id="inputBusqueda" placeholder="⌕ Buscar productos..." autocomplete="off">
+        <button id="btnCarrito" class="btn-carrito" type="button" aria-label="Abrir carrito, 0 unidades"
+            aria-expanded="false" aria-controls="panelCarrito">
+            💼︎
             <span class="cart-count">0</span>
         </button>
     </header>
+
     <main>
         <h2>Categorías</h2>
-        <nav class="categorias">
-            <button type="button" data-category="todos" class="activo">⌗ Todos</button>
-            <button type="button" data-category="perifericos"> Perifericos</button>
-            <button type="button" data-category="componentes">Componentes</button>
-            <button type="button" data-category="mantenimiento">💻︎ Mantenimiento</button>
+        <!-- Los 3 botones de categoría del catálogo + "Todos" para quitar el filtro -->
+        <nav class="categorias" id="navCategorias" aria-label="Filtrar por categoría">
+            <button type="button" data-category="todos" class="activo" aria-pressed="true">⌗ Todos</button>
+            <button type="button" data-category="Perifericos" aria-pressed="false">Periféricos</button>
+            <button type="button" data-category="Componentes" aria-pressed="false">Componentes</button>
+            <button type="button" data-category="Mantenimiento" aria-pressed="false">Mantenimiento</button>
         </nav>
 
         <section class="seccion-productos">
-            <div class="orden-productos">
-                <label for="selectOrden">Ordenar por:</label>
-                <select id="selectOrden">
-                    <option value="default">Relevancia</option>
-                    <option value="precio-asc">Precio: menor a mayor</option>
-                    <option value="precio-desc">Precio: mayor a menor</option>
-                    <option value="nombre-az">Nombre: A-Z</option>
-                    <option value="nombre-za">Nombre: Z-A</option>
-                </select>
+            <div class="barra-filtros">
+                <div class="orden-productos">
+                    <label for="selectOrden">Ordenar por:</label>
+                    <select id="selectOrden">
+                        <option value="default">Relevancia</option>
+                        <option value="precio-asc">Precio: menor a mayor</option>
+                        <option value="precio-desc">Precio: mayor a menor</option>
+                        <option value="nombre-az">Nombre: A-Z</option>
+                        <option value="nombre-za">Nombre: Z-A</option>
+                    </select>
+                </div>
+
+                <label class="filtro-disponibles" for="checkDisponibles">
+                    <input type="checkbox" id="checkDisponibles">
+                    Solo disponibles
+                </label>
+
+                <button type="button" id="btnLimpiar" class="btn-secundario">Limpiar filtros</button>
             </div>
+
+            <p id="mensajeEstado" class="estado-catalogo" role="status" aria-live="polite"></p>
+
+            <product-list id="listaProductos"></product-list>
+        </section>
     </main>
+
     <footer>
         <p>© 2024 TecnoStock. Todos los derechos reservados.</p>
-        <div class="contenedor-redes">
-            💬 ⓕ 𝕏 ♪
-        </div>
     </footer>
+
+    <p id="mensajes" class="mensajes" role="status" aria-live="polite" hidden></p>
+
     <div class="overlay-carrito" aria-hidden="true"></div>
-    <aside id="panelCarrito" class="panel-carrito" aria-label="carrito de compras">
+
+    <aside id="panelCarrito" class="panel-carrito" aria-label="Carrito de compras" aria-hidden="true">
         <div class="panel-cabecera">
             <h2>Tu carrito</h2>
-            <button class="btn-salir" type="button" aria-label="cerrar carrito">✕</button>
+            <button class="btn-salir" type="button" aria-label="Cerrar carrito">✕</button>
         </div>
-        <ul id="listaDeCompras">
-        </ul>
-        <div class="mensaje-vacio">
-            <h3>Tu carrito está vacío</h3>
-            <p>¡Vuelve a la tienda para empezar a comprar!</p>
-        </div>
-        <div class="panel-total">
-            Total:<span id="total"></span>
-        </div>
+        <shopping-cart id="carritoCompras"></shopping-cart>
     </aside>
-    <script type="module" src="js/main.js"></script>
+
+    <dialog id="dialogoPedido" class="dialogo-pedido" aria-labelledby="tituloDialogo">
+        <h2 id="tituloDialogo">Pedido confirmado</h2>
+        <div id="contenidoPedido"></div>
+        <button type="button" id="cerrarDialogo" class="btn-confirmar">Entendido</button>
+    </dialog>
+
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
